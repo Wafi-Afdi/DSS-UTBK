@@ -1,12 +1,15 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Dropdown, DropdownItem } from "flowbite-react";
-import FileInput from './FileInput';
 import Dropzone from 'react-dropzone'
 import Papa from 'papaparse'
+
+
+import FileInput from './FileInput';
 import CSVReader from './CSVReader';
 
-
+import { topsisFromFile, weightIPA, weightIPS } from '@/utils/topsis';
+import { ExportToCSV } from '@/utils/export'
 
 function MainComponent() {
     const [tipeSiswa, SetTipeSiswa] = useState("")
@@ -15,6 +18,26 @@ function MainComponent() {
     const [output_dss, SetOutputDSS] = useState([])
     const [fileError, setFileError] = useState(null)
 
+    async function DSSClick(e) {
+        let result
+        if (tipeSiswa == "MIPA") {
+            console.log(weightIPA)
+            result = await topsisFromFile(files, weightIPA, true);
+        } else if (tipeSiswa == "IPS") {
+            result = await topsisFromFile(files, weightIPS, true);
+        } else {
+            alert('Tipe siswa tidak valid')
+        }
+        SetOutputDSS(result);
+    }
+
+    async function ExportToCSVButton(e) {
+        if(output_dss.length > 0) {
+            await ExportToCSV(output_dss, 'result-topsis.csv');
+        } else {
+            alert('Generate output first')
+        }
+    }
 
     useEffect(() => {
         if (files) {
@@ -23,7 +46,7 @@ function MainComponent() {
                 delimitersToGuess: "",
                 complete: function (result) {
                     SetParseData(result.data)
-                    console.log(result)
+                    SetOutputDSS([])
                 }
             })
         }
@@ -113,6 +136,7 @@ function MainComponent() {
                         mt-2 mb-4
                     '
                             type='button'
+                            onClick={DSSClick}
                         >
                             Jalankan DSS
                         </button>
@@ -131,6 +155,7 @@ function MainComponent() {
                                     mt-2 mb-4
                                 '
                                 type='button'
+                                onClick={ExportToCSVButton}
                             >
                                 Export to CSV
                             </button>

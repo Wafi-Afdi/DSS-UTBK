@@ -1,5 +1,4 @@
 import { readCSVFromFile, readWeight } from './read.js'
-import path from 'path'
 
 const normalizeDataVector = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
@@ -119,8 +118,9 @@ const calculateDistancesAndPreferences = (weightedData, idealPositive, idealNega
   return results;
 }
 
-const topsisFromFile = (filePath, weight, simple=false) => {
-    const data = readCSVFromFile(filePath);
+const topsisFromFile = async (filePath, weight, simple=false) => {
+    const data = await readCSVFromFile(filePath);
+    //console.log(data);
     const normalizedData = normalizeDataVector(data);
     const weightedData = applyWeights(normalizedData, weight);
     const { idealPositive, idealNegative } = getIdealSolutions(weightedData);
@@ -141,7 +141,7 @@ const topsisFromFile = (filePath, weight, simple=false) => {
     return finalResults;
 }
 
-const weightIPA = readWeight('./src/weights/ipa.json');
-const weightIPS = readWeight('./src/weights/ips.json');
+const weightIPA = readWeight('mipa');
+const weightIPS = readWeight('ips');
 
 export {weightIPA, weightIPS, topsisFromFile}

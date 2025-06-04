@@ -1,38 +1,41 @@
-import fs from 'fs';
-import path from 'path';
 import Papa from 'papaparse'
 
-const readCSVFromFile = (filePath) => {
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  const parsed = Papa.parse(fileContent, {
-    header: true,
-    dynamicTyping: true,
-    skipEmptyLines: true
+import weight_ipa from "@/weights/ipa.json"
+import weight_ips from "@/weights/ips.json"
+
+const readCSVFromFile = (file) => {
+  return new Promise((resolve, reject) => {
+    Papa.parse(file, {
+      header: true,
+      dynamicTyping: true,
+      skipEmptyLines: true,
+      complete: function (result) {
+        if (result.errors.length > 0) {
+          reject(result.errors);
+        } else {
+          resolve(result.data);
+        }
+      }
+    });
   });
-
-  if (parsed.errors.length > 0) {
-    console.error("Parsing errors:", parsed.errors);
-    return null;
-  }
-
-  const data = parsed.data;
-
-//   console.log(data);
-//   console.table(data);
-
-  return data;
 }
 
-const readWeight = (filePath) => {
-    try {
-        const absolutePath = path.resolve(filePath);
-        const data = fs.readFileSync(absolutePath, 'utf8');
-        const json = JSON.parse(data);
-        return json;
-    } catch (err) {
-        console.error('Error reading or parsing JSON file:', err);
-        return null;
+const readWeight = (type) => {
+  try {
+    let data;
+    
+    if (type == "mipa") {
+      data = weight_ipa;
+    } else if (type == "ips") {
+      data = weight_ips
+    } else {
+      throw Error("Invalid Type: only 'mipa' and 'ips'")
     }
+    return data;
+  } catch (err) {
+    console.error('Error reading or parsing JSON file:', err);
+    return null;
+  }
 }
 
 export { readCSVFromFile, readWeight }

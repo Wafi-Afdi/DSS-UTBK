@@ -18,8 +18,8 @@ function CSVReader({ data = [] }) {
     }
 
     return (
-        <div style={{ overflowX: 'auto' }} className='my-5 w-full max-h-[500px] overflow-y-scroll'>
-            <table style={{ borderCollapse: 'collapse' }} className='w-full '>
+        <div style={{ overflowX: 'auto' }} className='my-5 w-full max-h-[500px] overflow-y-scroll relative'>
+            <table style={{ borderCollapse: 'collapse' }} className='w-full sticky'>
                 <thead className='font-ubuntu'>
                     <tr>
                         {columns.map((col, index) => (
