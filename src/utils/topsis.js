@@ -1,57 +1,5 @@
-const { readCSVFromFile, readWeight } = import('@/utils/read')
-
-class Topsis{
-    constructor(){
-        
-    }
-
-    normalizeDataVector(){
-        if (!Array.isArray(this.data) || this.data.length === 0) {
-            throw new Error("Data tidak valid atau kosong.");
-        }
-
-        const numericKeys = Object.keys(this.data[0]).filter(key =>
-            typeof this.data[0][key] === 'number'
-        );
-
-        const denominator = {};
-        numericKeys.forEach(key => {
-            denominator[key] = Math.sqrt(
-            this.data.reduce((sum, row) => sum + row[key] ** 2, 0)
-            );
-        });
-
-        const normalizedData = thisdata.map(row => {
-            const normalizedRow = {};
-            for (const key in row) {
-            if (numericKeys.includes(key)) {
-                normalizedRow[key] = +(row[key] / denominator[key]).toFixed(3);
-            } else {
-                normalizedRow[key] = row[key]; // Tetap simpan string seperti Nama
-            }
-            }
-            return normalizedRow;
-        });
-
-        this.normalizedData = normalizedData;
-    }
-
-    applyWeights(){
-        const weightedData = normalizedData.map(row => {
-            const weightedRow = {};
-            for (const key in row) {
-            if (typeof row[key] === 'number' && weights.hasOwnProperty(key)) {
-                weightedRow[key] = +(row[key] * weights[key]).toFixed(3);
-            } else {
-                weightedRow[key] = row[key]; // simpan Nama, dll
-            }
-            }
-            return weightedRow;
-        });
-
-        this.weightedData = weightedData;
-    }
-}
+import { readCSVFromFile, readWeight } from './read.js'
+import path from 'path'
 
 const normalizeDataVector = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
@@ -171,31 +119,29 @@ const calculateDistancesAndPreferences = (weightedData, idealPositive, idealNega
   return results;
 }
 
-const topsisFromFile = (filePath, weight) => {
+const topsisFromFile = (filePath, weight, simple=false) => {
     const data = readCSVFromFile(filePath);
     const normalizedData = normalizeDataVector(data);
     const weightedData = applyWeights(normalizedData, weight);
     const { idealPositive, idealNegative } = getIdealSolutions(weightedData);
     const finalResults = calculateDistancesAndPreferences(weightedData, idealPositive, idealNegative);
 
-    return finalResults
+    if(simple){
+      const allowedKeys = ["Nama_Siswa", "Preferensi", "Ranking"];
 
-    const allowedKeys = ["Nama_Siswa", "Preferensi", "Ranking"];
+      const filteredData = finalResults.map(obj =>
+          Object.fromEntries(
+              Object.entries(obj).filter(([key]) => allowedKeys.includes(key))
+          )
+      );
 
-    const filteredData = finalResults.map(obj =>
-        Object.fromEntries(
-            Object.entries(obj).filter(([key]) => allowedKeys.includes(key))
-        )
-    );
-
-    console.table(filteredData);
+      return filteredData;
+    }
+    
+    return finalResults;
 }
 
-const weightIPA = readWeight('./weights/ipa.json');
-const weightIPS = readWeight('./weights/ips.json');
+const weightIPA = readWeight('./src/weights/ipa.json');
+const weightIPS = readWeight('./src/weights/ips.json');
 
-module.exports = {
-  weightIPA,
-  weightIPS,
-  topsisFromFile
-}
+export {weightIPA, weightIPS, topsisFromFile}

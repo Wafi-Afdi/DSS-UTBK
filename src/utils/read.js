@@ -35,9 +35,4 @@ const readWeight = (filePath) => {
     }
 }
 
-module.exports = {
-    readCSVFromFile,
-    readWeight
-}
-
-
+export { readCSVFromFile, readWeight }
