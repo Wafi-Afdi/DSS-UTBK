@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path')
-const Papa = require('papaparse');
+import fs from 'fs';
+import path from 'path';
+import Papa from 'papaparse'
 
 const readCSVFromFile = (filePath) => {
   const fileContent = fs.readFileSync(filePath, 'utf8');
