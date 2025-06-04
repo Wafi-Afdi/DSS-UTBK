@@ -1,3 +1,6 @@
+import { ThemeModeScript } from "flowbite-react";
+
+
 import localFont from "next/font/local";
 import { Poppins, Ubuntu } from "next/font/google";
 import "./globals.css";
@@ -22,8 +25,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <ThemeModeScript />
+      </head>
       <body
-        className={`${poppins.variable} ${ubuntu.variable} antialiased`}
+        className={`${poppins.variable} ${ubuntu.variable}`}
       >
         {children}
       </body>

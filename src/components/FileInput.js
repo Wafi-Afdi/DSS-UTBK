@@ -13,7 +13,7 @@ function FileInput({
         onDropRejected: () => setFiles(null)
     });
     return (
-        <div className={`w-full border-2 border-dashed border-gray-400 bg-gray-100 p-4 rounded-lg hover:cursor-pointer ${files == null ? '' : 'hidden'}`}>
+        <div className={`w-full border-2 my-5 border-dashed border-gray-400 bg-gray-100 p-4 rounded-lg hover:cursor-pointer`}>
             <div {...getRootProps()} >
                 <input {...getInputProps()} />
                 <p className='text-center text-gray-700 text-sm font-ubuntu'>Drag file ke dalam sini</p>

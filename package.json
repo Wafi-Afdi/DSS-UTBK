@@ -12,6 +12,7 @@
   "dependencies": {
     "flowbite-react": "^0.11.7",
     "next": "14.2.11",
+    "papaparse": "^5.5.3",
     "react": "^18",
     "react-dom": "^18",
     "react-drag-drop-files": "^3.0.1",

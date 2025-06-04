@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="font-ubuntu w-full min-h-screen">
+    <div className="font-ubuntu">
       <main className="flex flex-col items-center justify-center w-full">
         <h1 className="font-ubuntu font-bold text-center 
           text-2xl

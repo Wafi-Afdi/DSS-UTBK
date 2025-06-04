@@ -5,10 +5,9 @@
 html, body {
   padding: 0;
   margin: 0;
-  height: 100%;
-  width: 100%;
   font-family: var(--font-ubuntu), sans-serif; /* optional if using your font */
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 img, picture, video, canvas, svg {
