@@ -1,4 +1,4 @@
-const { readCSVFromFile, readWeight } = require('./read')
+const { readCSVFromFile, readWeight } = import('@/utils/read')
 
 class Topsis{
     constructor(){
