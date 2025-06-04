@@ -127,7 +127,7 @@ const topsisFromFile = async (filePath, weight, simple=false) => {
     const finalResults = calculateDistancesAndPreferences(weightedData, idealPositive, idealNegative);
 
     if(simple){
-      const allowedKeys = ["Nama_Siswa", "Preferensi", "Ranking"];
+      const allowedKeys = ["ID_Siswa","Nama_Siswa","Kelas", "Jurusan","Preferensi", "Ranking"];
 
       const filteredData = finalResults.map(obj =>
           Object.fromEntries(
