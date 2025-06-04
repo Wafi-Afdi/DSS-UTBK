@@ -1,0 +1,15 @@
+{
+    "Absensi_Persen": 0.05,
+    "Penilaian_Wali_Kelas_Motivasi": 0.05,
+    "Penilaian_Wali_Kelas_Disiplin": 0.05,
+    "Penilaian_Wali_Kelas_Potensi_Akademik": 0.1,
+    "Nilai_MTK_Wajib": 0.1,
+    "Nilai_BI_Wajib": 0.1,
+    "Nilai_BIG_Wajib": 0.05,
+    "Nilai_Fisika": 0.1,
+    "Nilai_Kimia": 0.1,
+    "Nilai_Biologi": 0.1,
+    "Nilai_MTK_Peminatan": 0.1,
+    "Nilai_TIK": 0.05,
+    "Rata_Rata_Nilai_Semester_Akhir": 0.05
+}
